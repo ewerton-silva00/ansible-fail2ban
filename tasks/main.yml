@@ -1,0 +1,54 @@
+---
+- name: Verificando o status do serviço firewalld
+  service_facts:
+  register: service_state
+
+- debug: 
+    msg: "Firewalld já em execução."
+  when: service_state.ansible_facts.services["firewalld.service"].state == "running"
+
+- debug: 
+    msg: "Firewalld parado."
+  when: service_state.ansible_facts.services["firewalld.service"].state == "stopped"
+
+- name: Inicializando o serviço do firewalld.
+  systemd:
+    name: firewalld.service
+    state: started
+    enabled: yes
+  when: service_state.ansible_facts.services["firewalld.service"].state == "stopped"
+
+- name: Instalando o repositório EPEL (Extra Packages for Enterprise Linux)
+  yum:
+    name: epel-release
+    state: present
+    update_cache: yes
+
+- name: Instalando os pacotes do fail2ban
+  yum:
+    name: "{{ item }}"
+    update_cache: yes
+    state: present
+  loop:
+    - fail2ban
+    - fail2ban-firewalld
+    - fail2ban-systemd
+
+- name: Iniciando o serviço
+  systemd:
+    name: fail2ban.service
+    state: started
+    enabled: yes
+
+- name: Criando o arquivo de configuração /etc/fail2ban/jail.d/00-sshd.conf
+  template:
+    src: 00-sshd.conf.j2
+    dest: /etc/fail2ban/jail.d/00-sshd.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart fail2ban
+
+- name: IPs adicionados na whitelist.
+  debug:
+    msg: "{{ fail2ban_ignoreips }}"

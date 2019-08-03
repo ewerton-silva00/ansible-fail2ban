@@ -1,0 +1,12 @@
+# {{ ansible_managed }}
+
+[DEFAULT]
+bantime = 172800
+maxretry = 5
+ignoreip = {{ fail2ban_ignoreips | join(' ') }}
+
+[sshd]
+enabled = true
+filter = sshd
+action = iptables[name=SSH, port=ssh, protocol=tcp]
+maxretry = 5
