@@ -1,31 +1,28 @@
 Role Name
 =========
 
-A brief description of the role goes here.
-
-Requirements
-------------
-
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+Role com propósito de instalar e configurar o fail2ban no CentOS 7.x para proteção ssh.
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+Esta role utiliza a variável fail2ban_ignoreips para especificar os IPs que precisam ser ignorados pelo filtro do fail2ban.
 
-Dependencies
-------------
+Exemplo de uso:
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+fail2ban_ignoreips:
+  - 192.168.0.0/24
+  - 192.168.0.1/24
+  - 10.10.10.2/32
 
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+Como utilizar carregar essa role na sua playbook.
 
-    - hosts: servers
+    - hosts: all
       roles:
-         - { role: username.rolename, x: 42 }
+         - fail2ban
 
 License
 -------
@@ -35,4 +32,4 @@ BSD
 Author Information
 ------------------
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+LinkedIn: https://br.linkedin.com/in/ewertonsilva00
