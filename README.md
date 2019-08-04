@@ -22,7 +22,7 @@ fail2ban_ignoreips:
 Example Playbook
 ----------------
 
-Como utilizar carregar essa role na sua playbook.
+Como utilizar essa role na sua playbook.
 
     - hosts: all
       roles:
