@@ -28,7 +28,7 @@ fail2ban_ignoreips:
   - 127.0.0.1/8
 ```
 
-
+> Os valores acima são usados por padrão.
 
 Example Playbook
 ----------------
