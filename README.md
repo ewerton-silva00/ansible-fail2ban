@@ -1,4 +1,4 @@
-Role Name
+fail2ban
 =========
 
 Role com propósito de instalar e configurar o fail2ban no CentOS 7.x para proteção ssh.
